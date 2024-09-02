@@ -5,7 +5,7 @@
 
 Vector2f SeparationRule::computeForce(const std::vector<Boid*>& neighborhood, Boid* boid) {
   // Try to avoid boids too close
-  Vector2f separatingForce = Vector2f::zero();
+  //Vector2f separatingForce = Vector2f::zero();
 
   //    float desiredDistance = desiredMinimalDistance;
   //
@@ -16,22 +16,26 @@ Vector2f SeparationRule::computeForce(const std::vector<Boid*>& neighborhood, Bo
   //        // todo: find and apply force only on the closest mates
   //    }
 
-  for(cont Boid& b: neighborhood) {
-    Vec2 sepVec = {boid->getPosition().x - b.position.x, boid->getPosition().y - b.position.y};
+  Vector2f result = {0,0};
+  for(const Boid* b: neighborhood) {
+    Vector2f sepVec = {boid->getPosition().x - b->getPosition().x, boid->getPosition().y - b->getPosition().y};
     // calc dist between boids
     float dist = sqrt(sepVec.x * sepVec.x + sepVec.y * sepVec.y);
     // if inside sep radius, build force
-    if(dist < seperationRadius && dist > 0.01f) {
-      //normalize sep vector
+    if(dist < b->getDetectionRadius() && dist > 0.01f) {
+      //normalize separation vector
       sepVec = {sepVec.x / dist, sepVec.y / dist};
       float force = 1 / dist;
-      result = {result.x + sepVec.x*force, result.y + sepVec.y*force}
+      result = {result.x + sepVec.x*force, result.y + sepVec.y*force};
     }
   }
+  result = Vector2f::normalized(result);
 
-  separatingForce = Vector2f::normalized(separatingForce);
+  return result;
 
-  return separatingForce;
+ // separatingForce = Vector2f::normalized(separatingForce);
+
+  //return separatingForce;
 }
 
 bool SeparationRule::drawImguiRuleExtra() {
