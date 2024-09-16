@@ -10,6 +10,25 @@ Vector2f BoundedAreaRule::computeForce(const std::vector<Boid*>& neighborhood, B
   // todo: add here your code code here do make the boid follow the bounded box rule
   // hint: use this->world->engine->window->size() and desiredDistance
 
+  auto windowSize = this->world->engine->window->size();
+  //right
+  if(boid->getPosition().x > windowSize.x - desiredDistance) {
+    force.x = boid->getPosition().x - (windowSize.x + desiredDistance);
+  }
+  //left
+  if(boid->getPosition().x < desiredDistance) {
+    force.x = boid->getPosition().x + (windowSize.x + desiredDistance);
+  }
+  //top
+  if(boid->getPosition().y > windowSize.y - desiredDistance) {
+    force.y = boid->getPosition().y - (windowSize.y + desiredDistance);
+  }
+  //bottom
+  if(boid->getPosition().y < desiredDistance) {
+    force.y = boid->getPosition().y + (windowSize.y + desiredDistance);
+  }
+
+
   return force;
 }
 

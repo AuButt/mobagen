@@ -22,7 +22,8 @@ Vector2f SeparationRule::computeForce(const std::vector<Boid*>& neighborhood, Bo
     // calc dist between boids
     float dist = sqrt(sepVec.x * sepVec.x + sepVec.y * sepVec.y);
     // if inside sep radius, build force
-    if(dist < b->getDetectionRadius() && dist > 0.01f) {
+    if(dist < desiredMinimalDistance && dist > 0.01f) {
+
       //normalize separation vector
       sepVec = {sepVec.x / dist, sepVec.y / dist};
       float force = 1 / dist;
