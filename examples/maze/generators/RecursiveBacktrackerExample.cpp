@@ -59,7 +59,7 @@ bool RecursiveBacktrackerExample::Step(World* w) {
     }
     //else remove top cell from stack, backtrack
     else {
-      //w->SetNodeColor(stack.back(), Color::Black);
+      w->SetNodeColor(stack.back(), Color::Black);
       stack.pop_back();
       return true;
     }
@@ -94,19 +94,19 @@ Point2D RecursiveBacktrackerExample::randomStartPoint(World* world) {
 std::vector<Point2D> RecursiveBacktrackerExample::getVisitables(World* w, const Point2D& p) {
   auto sideOver2 = w->GetSize() / 2;
   std::vector<Point2D> visitables;
-  if(p.Up().y > -sideOver2 -1 && w->GetNodeColor(p.Up()) != Color::Red) {
+  if(p.Up().y > -sideOver2 -1 && w->GetNodeColor(p.Up()) != Color::Red && w->GetNodeColor(p.Up()) != Color::Black) {
     visitables.push_back(p.Up());
     std::cout << "UP \t";
   }
-  if(p.Right().x < sideOver2 +1 && w->GetNodeColor(p.Right()) != Color::Red) {
+  if(p.Right().x < sideOver2 +1 && w->GetNodeColor(p.Right()) != Color::Red && w->GetNodeColor(p.Right()) != Color::Black) {
     visitables.push_back(p.Right());
     std::cout << "RIGHT \t";
   }
-  if(p.Down().y < sideOver2 +1 && w->GetNodeColor(p.Down()) != Color::Red) {
+  if(p.Down().y < sideOver2 +1 && w->GetNodeColor(p.Down()) != Color::Red && w->GetNodeColor(p.Down()) != Color::Black) {
     visitables.push_back(p.Down());
     std::cout << "DOWN \t";
   }
-  if(p.Left().x > -sideOver2 -1 && w->GetNodeColor(p.Left()) != Color::Red) {
+  if(p.Left().x > -sideOver2 -1 && w->GetNodeColor(p.Left()) != Color::Red && w->GetNodeColor(p.Left()) != Color::Black) {
     visitables.push_back(p.Left());
     std::cout << "LEFT \t";
   }
